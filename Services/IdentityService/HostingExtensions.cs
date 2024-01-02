@@ -43,7 +43,15 @@ namespace IdentityService
             {
                 options.Cookie.SameSite = SameSiteMode.Lax;
             });
-
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+            });
             builder.Services.AddAuthentication();
                 //.AddGoogle(options =>
                 //{
@@ -67,7 +75,7 @@ namespace IdentityService
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors("AllowAllOrigins");
             app.UseStaticFiles();
             app.UseRouting();
             app.UseIdentityServer();
