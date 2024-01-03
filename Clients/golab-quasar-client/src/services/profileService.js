@@ -40,6 +40,19 @@ export const getUserProfile = async (id) => {
     }
 }
 
+export const getUserProfileByHandle = async (handle) => {
+    try {
+        var result = await api.get(`/profiles/handle/${handle}`, {headers: getHeaders()})
+
+        if (result.status !== 200)
+            throw error;
+
+        return result.data;
+    } catch (error) {
+        Notify.create({ message: "wystapił błąd podczas pobierania danych z serwera", color: "red" });
+    }
+}
+
 export const postUserProfile = async (userProfile) => {
     try {
         var headers = await getAuthHeaders();

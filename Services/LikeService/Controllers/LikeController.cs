@@ -1,6 +1,7 @@
 ﻿using LikeService.Managers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Models.api;
 
 namespace LikeService.Controllers
 {
@@ -31,12 +32,15 @@ namespace LikeService.Controllers
         }
 
         [Authorize]
-        [HttpPost("{cooId}")]
-        public async Task<IActionResult> Add(string cooId)
+        [HttpPost()]
+        public async Task<IActionResult> Add([FromBody]LikeForm form)
         {
             try
             {
-                await _likeManager.AddLike(cooId);
+                if(form.ValueChange == 1)
+                    await _likeManager.AddLike(form.CooId);
+                else
+                    await _likeManager.RemoveLike(form.CooId);
                 return Ok();
             }
             catch (Exception)

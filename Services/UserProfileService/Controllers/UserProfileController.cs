@@ -47,6 +47,21 @@ namespace UserProfileService.Controllers
             }
         }
 
+        [HttpGet("handle/{handle}")]
+        public async Task<IActionResult> GetByHandle(string handle)
+        {
+            try
+            {
+                Console.WriteLine("--> handle endpoint hit");
+                var result = await _userProfileManager.GetByUserHandle(handle);
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody]UserProfileDto userProfileDto)

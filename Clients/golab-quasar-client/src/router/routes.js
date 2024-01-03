@@ -7,7 +7,8 @@ const routes = [
       { path: '', component: () => import('pages/IndexPage.vue'), name: 'Strona Główna' },
       { path: '/callback', component: () => import('pages/oidc/callback.vue'), name: "Przekierowanie po Logowaniu"},
       { path: '/about', component: () => import('pages/AboutPage.vue'), name: 'Informacje o Aplikacji' },
-      {path: '/editprofile', component: () => import('pages/profile/UserProfileEditPage.vue'), name: "Edycja Profilu"}
+      {path: '/editprofile', component: () => import('pages/profile/UserProfileEditPage.vue'), name: "Edycja Profilu"},
+      {path: '/profile/:userHandle', component: () => import('pages/profile/UserProfilePage.vue'), name: "Profil Użytkownika"}
     ]
   },
 

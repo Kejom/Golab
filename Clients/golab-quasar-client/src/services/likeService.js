@@ -19,7 +19,7 @@ try {
 
     var likes = new Set();
     result.data.forEach(like => {
-        likes.add(like.CooId)
+        likes.add(like.cooId)
     })
 
     return likes;
@@ -28,4 +28,38 @@ try {
     Notify.create("Wystapił problem podczas pobierania danych z serwera ")
     return new Set();
 }
+}
+
+export const likeCoo = async(id) => {
+    try {
+        var headers = await getAuthHeaders();
+
+        var result = await api.post("/likes", {ValueChange: 1, CooId: id}, {headers: headers})
+
+        if(result.status !== 200)
+            throw error;
+
+        return true;
+
+    } catch (error) {
+        Notify.create("Wystapił problem podczas kontaktu z serwerem")
+        return false;
+    }
+}
+
+export const unlikeCoo = async(id) => {
+    try {
+        var headers = await getAuthHeaders();
+
+        var result = await api.post("/likes", {ValueChange: -1, CooId: id}, {headers: headers})
+
+        if(result.status !== 200)
+            throw error;
+
+        return true;
+     
+    } catch (error) {
+        Notify.create("Wystapił problem podczas kontaktu z serwerem")
+        return false;
+    }
 }

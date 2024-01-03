@@ -22,6 +22,9 @@ export const useUserStore = defineStore('userData', {
                 this.userCache[id] = profile;
             return profile;
         },
-        updateUserCache(userProfile) {this.userCache[userProfile.id] = userProfile}
+        updateUserCache(userProfile) {this.userCache[userProfile.id] = userProfile},
+        addLike(cooId) {this.loggedUserLikes.add(cooId)},
+        removeLike(cooId){this.loggedUserLikes.delete(cooId)}
     }
-})
+}
+)

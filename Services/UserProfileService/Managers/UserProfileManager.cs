@@ -27,6 +27,15 @@ namespace UserProfileService.Managers
             return _mapper.Map<UserProfileDto>(profile);
         }
 
+        public async Task<UserProfileDto> GetByUserHandle(string handle)
+        {
+            var profile  = (await DB.Find<UserProfile>().ManyAsync(p => p.Handle == handle)).FirstOrDefault();
+
+            if (profile is null) throw new Exception("profile with given handle doesnt exist");
+
+            return _mapper.Map<UserProfileDto>(profile);
+        }
+
         public async Task<UserProfileDto> Create(UserProfileDto profileDto)
         {
             var profile = _mapper.Map<UserProfile>(profileDto);
