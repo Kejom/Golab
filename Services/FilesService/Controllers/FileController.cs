@@ -29,7 +29,7 @@ namespace FilesService.Controllers
         }
 
         [HttpPost("avatar")]
-        public async Task<IActionResult> UploadAvatar([FromBody]IFormFile file)
+        public async Task<IActionResult> UploadAvatar([FromForm]IFormFile file)
         {
             try
             {

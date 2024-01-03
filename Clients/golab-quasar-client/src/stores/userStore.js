@@ -19,8 +19,9 @@ export const useUserStore = defineStore('userData', {
             const profile = await getUserProfile(id);
             
             if(profile)
-                this.userCache[userId] = profile;
+                this.userCache[id] = profile;
             return profile;
-        }
+        },
+        updateUserCache(userProfile) {this.userCache[userProfile.id] = userProfile}
     }
 })

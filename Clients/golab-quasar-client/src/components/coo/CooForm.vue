@@ -4,8 +4,8 @@
             <q-input class="new-coo" bottom-slots v-model="newCooText" placeholder="Podziel się czymś ciekawym."
                 counter maxlength="280" autogrow>
                 <template v-slot:before>
-                    <q-avatar size="4em" class="gt-sm">
-                        <img src="../../assets/golab-default-avatar.jpg">
+                    <q-avatar v-if="store.loggedUserProfile" size="4em" class="gt-sm">
+                        <img :src="`http://localhost:6001/files/avatar/${store.loggedUserProfile.avatarId}`">
                     </q-avatar>
                 </template>
             </q-input>
@@ -21,26 +21,18 @@
 import {ref} from 'vue'
 import { api } from 'src/boot/axios';
 import mgr from 'src/oidc/oidc-lite';
-import { useCounterStore } from 'src/stores/example-store';
+import { useUserStore } from 'src/stores/userStore';
 import { postCoo } from 'src/services/cooService';
 
 export default {
     name: 'CooForm',
     setup(_, {emit}){
         const newCooText = ref('');
-        const store = useCounterStore();
-        const addNewCoo = async() => {
-            //emit('addClicked', {cooText: newCooText.value})
-            console.log(newCooText.value);
-            
+        const store = useUserStore();
+        const addNewCoo = async() => {           
             var coo = {
                 content: newCooText.value,
             }
-
-            //var token = store.loggedUser.access_token;
-            //console.log(token);
-            //var result = await api.post('/coos', coo, {headers: {"Authorization": `Bearer ${token}`, 'Content-type': 'application/json'} })
-            //console.log(result);
             await postCoo(coo);
             newCooText.value = "";
         }
@@ -48,6 +40,7 @@ export default {
         return {
             newCooText,
             addNewCoo,
+            store,
 
         }
     }

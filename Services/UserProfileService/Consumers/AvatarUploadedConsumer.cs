@@ -9,6 +9,7 @@ namespace UserProfileService.Consumers
     {
         public async Task Consume(ConsumeContext<AvatarUploaded> context)
         {
+            Console.WriteLine("Consuming AvatarUpload event");
             var userId = context.Message.UserId;
             var avatarId = context.Message.AvatarId;
 

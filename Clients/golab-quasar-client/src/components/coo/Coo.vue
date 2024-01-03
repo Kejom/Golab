@@ -2,17 +2,17 @@
     <q-item class="qweet q-py-md">
       <q-item-section avatar top>
         <q-btn v-if="user" flat :to="`/${user.handle}`">
-        <q-avatar v-if="user" size="xl">
-          <img  :src="user.avatarUrl">
+        <q-avatar v-if="user?.avatarId" size="xl">
+          <img  :src="`http://localhost:6001/files/avatar/${user.avatarId}`">
         </q-avatar>
-        <q-avatar v-if="!user" size="xl">
+        <q-avatar v-else size="xl">
             <img src="../../assets/golab-default-avatar.jpg">
         </q-avatar>
       </q-btn>
       </q-item-section>
       <q-item-section>
         <q-item-label class="text-subtitle1">
-          <strong>{{ user ? user.name : "nieznany" }}</strong>
+          <strong>{{ user? user.displayName : 'nieznany' }}</strong>
           <span class="text-grey-7"> @{{ user ? user.handle: "nieznany" }}
             <br class="lt-md">&bull; {{ relativeDate(coo.created) }} temu
           </span>
@@ -40,6 +40,8 @@
   import { formatDistance } from 'date-fns'
   import { pl } from 'date-fns/locale'
   import { useUserStore } from 'src/stores/userStore'
+  import { useCooStore } from 'src/stores/cooStore'
+import { deleteCoo } from 'src/services/cooService'
   export default {
     name: 'Coo',
     props: {
@@ -51,9 +53,14 @@
     },
     setup(props, { emit }) {
       const userStore = useUserStore();
+      const cooStore = useCooStore();
       const user = ref({})
       const isLiked = computed(() => userStore.loggedUserLikes.has(props.coo.id))
-      const removeClicked = () => console.log("remove clicked");
+      const removeClicked = async() => {
+        var success = await deleteCoo(props.coo.id);
+        if(success)
+          cooStore.removeCoo(props.coo.id);
+      };
   
       const likeClicked = () => console.log("like clikced");
   
@@ -61,7 +68,6 @@
   
       onMounted(async() => {
         const userProfile = await userStore.getUser(props.coo.userId);
-        console.log(userProfile);
         user.value = userProfile;
       })
       return {
@@ -76,4 +82,6 @@
   }
   </script>
   
-  <style lang="sass" scoped></style>
+  <style lang="sass" scoped>
+
+</style>

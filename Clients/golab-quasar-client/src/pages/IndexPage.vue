@@ -9,17 +9,17 @@
         </q-btn-group>      
       </div>
 
-      <coos-list :coos="coos" />
+      <coos-list :coos="cooStore.getCoos" />
     </q-scroll-area>
   </q-page>
 </template>
 
 <script>
-import { defineComponent, computed, onMounted, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import CooForm from 'src/components/coo/CooForm.vue'
 import CoosList from 'src/components/coo/CoosList.vue';
-import { getCoos } from 'src/services/cooService'
 import { useUserStore } from 'src/stores/userStore';
+import { useCooStore } from 'src/stores/cooStore';
 
 
 export default defineComponent({
@@ -31,15 +31,12 @@ export default defineComponent({
   setup() {
     const coos = ref([]);
     const userStore = useUserStore();
-    onMounted(async () => {
-      //var result = await api.get("/coos", {headers: {'Content-type': 'application/json'}})
-      coos.value = await getCoos();
-      console.log(coos.value);
-    })
+    const cooStore = useCooStore();
 
     return {
       coos,
-      userStore
+      userStore,
+      cooStore
     }
   }
 })
