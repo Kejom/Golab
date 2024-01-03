@@ -9,6 +9,10 @@ namespace UserProfileService.Data
         public static async Task InitDb(WebApplication app)
         {
             await DB.InitAsync("GolabDb", MongoClientSettings.FromConnectionString(app.Configuration.GetConnectionString("MongoDbConnection")));
+
+            await DB.Index<UserProfile>()
+                .Key(p => p.Handle, KeyType.Text)
+                .CreateAsync();
         }
     }
 }

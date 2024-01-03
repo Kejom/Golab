@@ -19,14 +19,29 @@
 
 <script>
 import {ref} from 'vue'
+import { api } from 'src/boot/axios';
+import mgr from 'src/oidc/oidc-lite';
+import { useCounterStore } from 'src/stores/example-store';
+import { postCoo } from 'src/services/cooService';
+
 export default {
     name: 'CooForm',
     setup(_, {emit}){
         const newCooText = ref('');
-
-        const addNewCoo = () => {
+        const store = useCounterStore();
+        const addNewCoo = async() => {
             //emit('addClicked', {cooText: newCooText.value})
             console.log(newCooText.value);
+            
+            var coo = {
+                content: newCooText.value,
+            }
+
+            //var token = store.loggedUser.access_token;
+            //console.log(token);
+            //var result = await api.post('/coos', coo, {headers: {"Authorization": `Bearer ${token}`, 'Content-type': 'application/json'} })
+            //console.log(result);
+            await postCoo(coo);
             newCooText.value = "";
         }
 

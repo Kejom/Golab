@@ -14,15 +14,15 @@
 // import Oidc from 'oidc-client'
 import oidc from '../../oidc/oidc'
 import { useRouter } from 'vue-router';
-import { useCounterStore } from 'src/stores/example-store';
+import { useUserStore } from 'src/stores/userStore';
 export default {
   mounted () {
     const mgr = oidc;
     const router = useRouter();
-    const store = useCounterStore();
+    const store = useUserStore();
     mgr.signinRedirectCallback().then(function (user) {
         console.log(user);
-        store.setLoggedUser(user);
+        store.setLoggeduserId(user.profile.sub);
       router.push("/");
     }).catch(function (err) {
       console.log(err)

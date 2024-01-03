@@ -16,7 +16,7 @@
             <q-item-section class="text-h6 text-weight-bold">Informacje o Aplikacji</q-item-section>
           </q-item>
 
-          <q-item v-if="store.loggedUser" clickable v-ripple @click="onLogout"  exact>
+          <q-item v-if="store.loggedUserId" clickable v-ripple @click="onLogout"  exact>
             <q-item-section avatar>
               <q-icon name="logout" size="md"  />
             </q-item-section>
@@ -35,12 +35,12 @@
 
           
   
-          <q-item clickable v-ripple to="/register" exact>
+          <q-item clickable v-ripple  @click="test" exact>
             <q-item-section avatar>
               <q-icon name="person_add" size="md"  />
             </q-item-section>
   
-            <q-item-section class="text-h6 text-weight-bold">Zarejestruj Konto</q-item-section>
+            <q-item-section class="text-h6 text-weight-bold">Test</q-item-section>
           </q-item>
   
       </q-list>
@@ -50,27 +50,32 @@
   import { useRouter } from 'vue-router';
   import { onMounted } from 'vue';
   import mgr from 'src/oidc/oidc-lite';
-  import { useCounterStore } from 'src/stores/example-store';
+  import {useUserStore} from 'src/stores/userStore'
+  import { getCurrentUserProfile } from 'src/services/profileService'
 
 
   export default {
       name: 'Navigation',
       setup(){
         const router = useRouter();
-        const store = useCounterStore();
+        const store = useUserStore();
 
         onMounted(async() => {
           const user = await mgr.getUser();
-          store.setLoggedUser(user);
+          
+          if(user)
+            store.setLoggeduserId(user.profile.sub);
         })
 
         const onLogin = () => mgr.signinRedirect();
         const onLogout = () => mgr.signoutRedirect();
+        const test = async () => await getCurrentUserProfile();
 
         return {
           onLogin,
           onLogout,
-          store
+          store,
+          test
         }
       }
   }

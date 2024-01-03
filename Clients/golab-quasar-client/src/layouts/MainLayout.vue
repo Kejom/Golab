@@ -24,7 +24,6 @@
     </q-drawer>
 
     <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
-      <login-form/>
     </q-drawer>
 
     <q-page-container class="full-height" style="max-width: 1400px; margin: 0 auto;">
@@ -38,12 +37,12 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Navigation from 'src/components/layout/Navigation.vue'
-import LoginForm from 'src/components/authentication/LoginForm.vue'
+
 
 export default {
   components: {
     Navigation,
-    LoginForm
+
   },
   setup() {
     const route = useRoute()

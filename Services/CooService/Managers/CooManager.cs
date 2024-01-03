@@ -14,10 +14,11 @@ namespace CooService.Managers
         private readonly IMapper _mapper;
         private readonly IPublishEndpoint _publishEndpoint;
         private readonly IHttpContextAccessor _contextAccessor;
-        public CooManager(IMapper mapper, IPublishEndpoint publishEndpoint)
+        public CooManager(IMapper mapper, IPublishEndpoint publishEndpoint, IHttpContextAccessor contextAccessor)
         {
             _mapper = mapper;
             _publishEndpoint = publishEndpoint;
+            _contextAccessor = contextAccessor;
         }
 
 
@@ -57,6 +58,7 @@ namespace CooService.Managers
         {
             var coo = _mapper.Map<Coo>(cooDto);
             coo.UserId = GetCurrentUserId();
+            coo.Created = DateTime.UtcNow;
             await coo.SaveAsync();
             return _mapper.Map<CooDto>(coo);
         }
