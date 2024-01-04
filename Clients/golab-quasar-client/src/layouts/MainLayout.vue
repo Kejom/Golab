@@ -24,6 +24,7 @@
     </q-drawer>
 
     <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+      <search-bar v-model="cooStore.filter" placeholder="Szukaj..." />
     </q-drawer>
 
     <q-page-container class="full-height" style="max-width: 1400px; margin: 0 auto;">
@@ -36,16 +37,19 @@
 <script>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { useCooStore } from 'src/stores/cooStore'
 import Navigation from 'src/components/layout/Navigation.vue'
+import SearchBar from 'src/components/layout/SearchBar.vue'
 
 
 export default {
   components: {
     Navigation,
-
+    SearchBar
   },
   setup() {
-    const route = useRoute()
+    const route = useRoute();
+    const cooStore = useCooStore();
     const leftDrawerOpen = ref(false)
     const rightDrawerOpen = ref(false)
 
@@ -60,6 +64,7 @@ export default {
         rightDrawerOpen.value = !rightDrawerOpen.value
       },
       route,
+      cooStore
     }
   }
 }

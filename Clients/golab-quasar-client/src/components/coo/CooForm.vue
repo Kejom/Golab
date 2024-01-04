@@ -22,6 +22,7 @@ import {ref} from 'vue'
 import { api } from 'src/boot/axios';
 import mgr from 'src/oidc/oidc-lite';
 import { useUserStore } from 'src/stores/userStore';
+import { useCooStore } from 'src/stores/cooStore';
 import { postCoo } from 'src/services/cooService';
 
 export default {
@@ -29,11 +30,14 @@ export default {
     setup(_, {emit}){
         const newCooText = ref('');
         const store = useUserStore();
+        const cooStore = useCooStore();
         const addNewCoo = async() => {           
             var coo = {
                 content: newCooText.value,
             }
-            await postCoo(coo);
+            var result = await postCoo(coo);
+            if(result)
+                cooStore.addCoo(result);
             newCooText.value = "";
         }
 

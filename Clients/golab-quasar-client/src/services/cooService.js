@@ -21,6 +21,16 @@ export const getCoos = async () => {
     return [];
 }
 
+export const getCooById = async (id) => {
+    var result = await api.get(`/coos/${id}`, {headers: getHeaders()})
+
+    if(result.status === 200)
+        return result.data;
+
+        Notify.create("Wystapił problem podczas pobierania danych z serwera ")
+        return null;      
+}
+
 
 export const postCoo = async (coo) => {
     try {
@@ -29,8 +39,9 @@ export const postCoo = async (coo) => {
 
         if (result.status !== 200)
             throw error;
-
+        
         Notify.create({ message: "Dodano nowe gruchnięcie", color: "green" });
+        return result.data;
     } catch (error) {
         Notify.create({ message: "Wystąpił problem podczas dodawania gruchnięcia", color: "red" })
     }

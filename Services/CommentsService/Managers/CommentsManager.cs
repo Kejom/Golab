@@ -38,6 +38,7 @@ namespace CommentsService.Managers
 
             var comment = _mapper.Map<Comment>(commentDto);
             comment.UserId = GetCurrentUserId();
+            comment.Created = DateTime.UtcNow;
             await comment.SaveAsync();
             var commentAdded = new CommentAdded { CooId = comment.CooId };
             await _endpoint.Publish(commentAdded);

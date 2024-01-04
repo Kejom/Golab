@@ -15,6 +15,12 @@ export const useCooStore = defineStore("Coo", {
             coos[index] = coo;
             this.coos = coos;
         },
+        incrementCooComments(id, increment){
+            const coos = [...this.coos];
+            const index = coos.findIndex(c => c.id === id);
+            coos[index].comments += increment;
+            this.coos = coos;
+        },
         async initCoos(){
             var coos = await getCoos();
             if(coos)

@@ -32,7 +32,7 @@ namespace LikeService.Controllers
         }
 
         [Authorize]
-        [HttpPost()]
+        [HttpPost]
         public async Task<IActionResult> Add([FromBody]LikeForm form)
         {
             try
