@@ -1,11 +1,15 @@
-@page
+﻿@page
 @model IdentityService.Pages.Logout.LoggedOut
 
 <div class="logged-out-page">
     <h1>
-        Logout
-        <small>You are now logged out</small>
+        Wylogowanie
+        <small>Pomyślnie wylogowane z aplikacji</small>
     </h1>
+
+    <div>
+        Naciśnij <a class="PostLogoutRedirectUri" href="http://localhost:9000">tutaj</a> aby wrócic do aplikacji.
+    </div>
 
     @if (Model.View.PostLogoutRedirectUri != null)
     {

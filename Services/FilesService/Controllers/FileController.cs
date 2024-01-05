@@ -1,4 +1,5 @@
 ﻿using FilesService.Managers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FilesService.Controllers
@@ -27,7 +28,7 @@ namespace FilesService.Controllers
                 return StatusCode(500);
             }
         }
-
+        [Authorize]
         [HttpPost("avatar")]
         public async Task<IActionResult> UploadAvatar([FromForm]IFormFile file)
         {

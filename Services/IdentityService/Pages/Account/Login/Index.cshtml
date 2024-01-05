@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model IdentityService.Pages.Login.Index
 
 <div class="login-page">
@@ -13,7 +13,7 @@
             <div class="col-6 offset-3">
                 <div class="card">
                     <div class="card-header">
-                        <h2>Login</h2>
+                        <h2>Logowanie</h2>
                     </div>
 
                     <div class="card-body">
@@ -21,12 +21,12 @@
                             <input type="hidden" asp-for="Input.ReturnUrl" />
 
                             <div class="form-group">
-                                <label asp-for="Input.Username"></label>
-                                <input class="form-control" placeholder="Username" asp-for="Input.Username" autofocus>
+                                <label asp-for="Input.Username">Identyfikator Użytkownika</label>
+                                <input class="form-control" placeholder="Identyfikator Użytkownika" asp-for="Input.Username" autofocus>
                             </div>
                             <div class="form-group">
-                                <label asp-for="Input.Password"></label>
-                                <input type="password" class="form-control" placeholder="Password" asp-for="Input.Password" autocomplete="off">
+                                <label asp-for="Input.Password">Hasło</label>
+                                <input type="password" class="form-control" placeholder="Hasło" asp-for="Input.Password" autocomplete="off">
                             </div>
 
                             @if (Model.View.AllowRememberLogin)
@@ -35,18 +35,18 @@
                                     <div class="form-check">
                                         <input class="form-check-input" asp-for="Input.RememberLogin">
                                         <label class="form-check-label" asp-for="Input.RememberLogin">
-                                            Remember My Login
+                                            Zapamiętaj mnie
                                         </label>
                                     </div>
                                 </div>
                             }
 
                             <a class="pb-2 d-block" asp-page="../Register/Index" asp-route-returnUrl="@Model.Input.ReturnUrl">
-                                New User? Register here
+                                Nie posiadasz konta? Zarejestruj nowe konto tutaj!
                             </a>
 
-                            <button class="btn btn-primary" name="Input.Button" value="login">Login</button>
-                            <button class="btn btn-secondary" name="Input.Button" value="cancel">Cancel</button>
+                            <button class="btn btn-primary" name="Input.Button" value="login">Zaloguj</button>
+                            <button class="btn btn-secondary" name="Input.Button" value="cancel">Anuluj</button>
                         </form>
                     </div>
                 </div>
