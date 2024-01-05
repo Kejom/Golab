@@ -122,7 +122,7 @@ export default {
             if (!success) return;
 
             comments.value = comments.value.filter(c => c.id !== id);
-            cooStore.incrementCooComments(props.cooId, -1);
+            cooStore.incrementCooComments(route.params.cooId, -1);
         }
 
 
